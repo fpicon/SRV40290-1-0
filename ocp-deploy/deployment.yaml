@@ -1,0 +1,280 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: spring-java-openshift-wom-serv-appdynamics
+objects:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        description: '${APP_DES}'
+      labels:
+        kind: 'service'
+        app: '${APP_NAME}'
+        component: '${APP_NAME}'
+        group: spring-java-openshift
+        version: '${APP_VERSION}'
+        vsts/build-version: '${BUILD_VERSION}'
+        vsts/release-number: '${RELEASE_NUMBER}'
+      name: '${APP_NAME}'
+    spec:
+      ports:
+        - name: service
+          port: '${{SERVICE_PORT}}'
+          protocol: TCP
+          targetPort: '${{SERVICE_PORT}}'
+      selector:
+        app: '${APP_NAME}'
+        component: '${APP_NAME}'
+        group: spring-java-openshift
+        version: '${APP_VERSION}'
+        vsts/build-version: '${BUILD_VERSION}'
+        vsts/release-number: '${RELEASE_NUMBER}'
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      annotations:
+        description: '${APP_DES}'
+      labels:
+        kind: 'service'
+        app: '${APP_NAME}'
+        component: '${APP_NAME}'
+        group: spring-java-openshift
+        version: '${APP_VERSION}'
+        vsts/build-version: '${BUILD_VERSION}'
+        vsts/release-number: '${RELEASE_NUMBER}'
+      name: '${APP_NAME}'
+    spec:
+      replicas: 1
+      selector:
+        app: '${APP_NAME}'
+        component: '${APP_NAME}'
+        group: spring-java-openshift
+        version: '${APP_VERSION}'
+        vsts/build-version: '${BUILD_VERSION}'
+        vsts/release-number: '${RELEASE_NUMBER}'
+      strategy:
+        resources: {}
+      template:
+        metadata:
+          annotations:
+            description: '${APP_DES}'
+          labels:
+            kind: 'service'
+            app: '${APP_NAME}'
+            component: '${APP_NAME}'
+            group: spring-java-openshift
+            version: '${APP_VERSION}'
+            vsts/build-version: '${BUILD_VERSION}'
+            vsts/release-number: '${RELEASE_NUMBER}'
+        spec:
+          containers:
+            - env:
+                - name: KUBERNETES_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: LOGLEVEL
+                  value: '${LOGLEVEL}'
+                - name: JAVA_OPTIONS
+                  value: >-
+                    ${JAVA_OPTIONS}
+                - name: APP_ENV
+                  value: '${APP_ENV}'
+                - name: APPDYNAMICS_CONTROLLER_HOST_NAME
+                  value: '${APPDYNAMICS_CONTROLLER_HOST_NAME}'
+                - name: APPDYNAMICS_CONTROLLER_PORT
+                  value: '${APPDYNAMICS_CONTROLLER_PORT}'
+                - name: APPDYNAMICS_CONTROLLER_SSL_ENABLED
+                  value: '${APPDYNAMICS_CONTROLLER_SSL_ENABLED}'
+                - name: APPDYNAMICS_AGENT_ACCOUNT_NAME
+                  value: '${APPDYNAMICS_AGENT_ACCOUNT_NAME}'
+                - name: APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY
+                  value: '${APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY}'
+                - name: APPDYNAMICS_AGENT_APPLICATION_NAME
+                  value: '${APPDYNAMICS_AGENT_APPLICATION_NAME}'
+                - name: TZ
+                  value: '${TZ}'
+                - name: APPDYNAMICS_AGENT_TIER_NAME
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APPDYNAMICS_AGENT_NODE_NAME
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.name
+              image: '${DOCKER_REGISTRY}${APP_NS}/${APP_NAME}:${IMAGE_TAG}'
+              imagePullPolicy: Always
+              livenessProbe:
+                failureThreshold: '${{LIVENESS_FAILURE}}'
+                httpGet:
+                  path: ${SERVICE_HEALTH}
+                  port: '${{SERVICE_HEALTH_PORT}}'
+                  scheme: HTTP
+                initialDelaySeconds: '${{LIVENESS_DELAY}}'
+                periodSeconds: '${{LIVENESS_PERIOD}}'
+                successThreshold: 1
+                timeoutSeconds: 1
+              name: '${APP_NAME}'
+              ports:
+                - containerPort: '${{SERVICE_PORT}}'
+                  name: service
+                - containerPort: 8778
+                  name: jolokia
+              readinessProbe:
+                failureThreshold: '${{READINESS_FAILURE}}'
+                httpGet:
+                  path: ${SERVICE_HEALTH}
+                  port: '${{SERVICE_HEALTH_PORT}}'
+                  scheme: HTTP
+                initialDelaySeconds: '${{READINESS_DELAY}}'
+                periodSeconds: '${{READINESS_PERIOD}}'
+                successThreshold: 1
+                timeoutSeconds: 1
+              resources:
+                requests:
+                  cpu: '${{REQUESTS_CPU}}'
+                  memory: '${{REQUESTS_MEMORY}}'
+                limits:
+                  cpu: '${{LIMITS_CPU}}'
+                  memory: '${{LIMITS_MEMORY}}'
+              volumeMounts:
+                - mountPath: /etc/config
+                  name: volume-properties-file
+                - mountPath: /opt/certs
+                  name: volume-certs
+                  readOnly: true
+          volumes:
+            - configMap:
+                defaultMode: 420
+                name: ${APP_NAME}-properties
+              name: volume-properties-file
+            - name: volume-certs
+              secret:
+                defaultMode: 420
+                secretName: ${APP_NAME}-certs
+      triggers:
+        - type: ConfigChange
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - '${APP_NAME}'
+            from:
+              kind: ImageStreamTag
+              name: '${APP_NAME}:${IMAGE_TAG}'
+          type: ImageChange
+    status: {}
+parameters:
+  - description: The name assigned to the application.
+    displayName: Application Name
+    name: APP_NAME
+    required: true
+  - description: The abbreviated description of the application.
+    name: APP_DES
+    required: true
+  - name: APP_NS
+    required: true
+  - description: The application version.
+    displayName: Application Version
+    name: APP_VERSION
+    required: true
+  - description: Properties file path.
+    displayName: Properties file
+    name: APP_ENV
+    required: true
+  - description: Image tag that will be used.
+    displayName: Image Stream tag
+    name: IMAGE_TAG
+    required: true
+  - description: VSTS Build version.
+    displayName: VSTS Build version
+    name: BUILD_VERSION
+    required: true
+  - name: DOCKER_REGISTRY
+    required: true
+  - description: VSTS Release number.
+    displayName: VSTS Release number
+    name: RELEASE_NUMBER
+    required: true
+  - description: log level
+    displayName: log level
+    name: LOGLEVEL
+    required: true
+    value: INFO
+  - description: Limits for use to the JVM.
+    displayName: JVM Memory configuration
+    name: JAVA_OPTIONS
+    required: true
+    value: >-
+      -Xmx100m -Xss256k -XX:MetaspaceSize=16m -XX:MaxMetaspaceSize=64m
+      -XX:CompressedClassSpaceSize=32M -XX:ReservedCodeCacheSize=16M
+      -XX:NativeMemoryTracking=summary -XX:MaxHeapFreeRatio=70
+  - description: AppDynamics Controller Host
+    displayName: AppDynamics Controller Host
+    name: APPDYNAMICS_CONTROLLER_HOST_NAME
+  - description: AppDynamics Controller Port
+    displayName: AppDynamics Controller Port
+    name: APPDYNAMICS_CONTROLLER_PORT
+  - description: AppDyanamics SSL Enabled
+    displayName: AppDyanamics SSL Enabled
+    name: APPDYNAMICS_CONTROLLER_SSL_ENABLED
+  - description: AppDynamics Agent Account Name
+    displayName: AppDynamics Agent Account Name
+    name: APPDYNAMICS_AGENT_ACCOUNT_NAME
+  - description: AppDynamics Agent Acount Key
+    displayName: AppDynamics Agent Acount Key
+    name: APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY
+  - description: AppDynamics Agent Application Name
+    displayName: AppDynamics Agent Application Name
+    name: APPDYNAMICS_AGENT_APPLICATION_NAME
+    value: 'OPENSHIFT'
+  - description: Time Zone
+    displayName: Time Zone
+    name: TZ
+    required: true
+    value: America/Santiago
+  - description: Requests CPU
+    displayName: Requests CPU
+    name: REQUESTS_CPU
+    value: 100m
+  - description: Requests Memory
+    displayName: Requests Memory
+    name: REQUESTS_MEMORY
+    value: 200Mi
+  - description: Limits CPU
+    displayName: Limits CPU
+    name: LIMITS_CPU
+    value: 500m
+  - description: Limits Memory
+    displayName: Limits Memory
+    name: LIMITS_MEMORY
+    value: 900Mi
+  - description: Service health path endpoint
+    displayName: Service healthPathEndpoint
+    name: SERVICE_HEALTH
+  - description: Service livenessProbe Failure Threshold
+    displayName: Service livenessProbe failureThreshold
+    name: LIVENESS_FAILURE
+  - description: Service livenessProbe Initial DelaySeconds
+    displayName: Service livenessProbe initialDelaySeconds
+    name: LIVENESS_DELAY
+  - description: Service livenessProbe Period Seconds
+    displayName: Service livenessProbe periodSeconds
+    name: LIVENESS_PERIOD
+  - description: Service readinessProbe Failure Threshold
+    displayName: Service readinessProbe failureThreshold
+    name: READINESS_FAILURE
+  - description: Service readinessProbe Initial DelaySeconds
+    displayName: Service readinessProbe initialDelaySeconds
+    name: READINESS_DELAY
+  - description: Service readinessProbe Period Seconds
+    displayName: Service readinessProbe periodSeconds
+    name: READINESS_PERIOD
+  - description: Service Port
+    displayName: Service Port
+    name: SERVICE_PORT
+    value: '8889'
+  - description: Service Health Port
+    displayName: Service Health Port
+    name: SERVICE_HEALTH_PORT
+    value: '8889'

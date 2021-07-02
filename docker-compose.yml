@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+ bidea-zookeeper:
+  image: wurstmeister/zookeeper
+  ports:
+  - "2181:2181"
+ bidea-kafka:
+  image: wurstmeister/kafka
+  ports:
+  - "9092:9092"
+  hostname: bidea-kafka
+  environment:
+      KAFKA_ADVERTISED_HOST_NAME: bidea-kafka
+      KAFKA_CREATE_TOPICS: "KDESA_WOMAPI_COMMON-CREDIT_CHECK"
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://bidea-kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://bidea-kafka:9092
+      KAFKA_ZOOKEEPER_CONNECT: bidea-zookeeper:2181
+  depends_on:
+  - "bidea-zookeeper"
+ bidea-mongo-db:
+    image: mongo
+    ports:
+    - "27017:27017"

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project abortOnError="false" activeEnvironment="Default" id="8798379c-dfa5-48f1-9a92-2bfcac4ec18c" name="SRV40290-CustomerInsight-REST-POST" resourceRoot="" runType="SEQUENTIAL" soapui-version="5.6.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface id="fec87f6e-ff82-4b14-8f2a-925e3187ff2a" name="CustomerInsight" type="rest" wadlVersion="http://wadl.dev.java.net/2009/02" xsi:type="con:RestService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>${#Project#protocol}://${#Project#server}:${#Project#port}</con:endpoint></con:endpoints><con:resource id="24c0776c-58ad-42df-b977-7592b7b38373" name="ValidRequest" path="/${#Project#basePath}/${#Project#path1}"><con:settings/><con:parameters/><con:method name="Method Valid" id="a7e3ed4d-7eff-4d97-86d3-0e63f86df538" method="POST"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>400</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>200 202</con:status><con:params/><con:element>Response</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>503</con:status><con:params/><con:element>html</con:element></con:representation><con:request name="Request 1" id="69eb2995-ef38-428d-a269-c3c3757c0efc" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#protocol}://${#Project#server}:${#Project#port}</con:endpoint><con:request>{
+  "sourceAddData": [
+    {
+      "name": "region",
+      "value": "15"
+    }
+  ],
+  "party": {
+    "nationalId": "23872788k",
+    "currency": "CLP"
+  },
+  "partyAddData": [
+    {
+      "name": "IDFIBRA",
+      "value": "798044"
+    }
+  ],
+  "portability": {
+    "operator": "Virgin Mobile",
+    "amount": "9990"
+  },
+  "portabilityAddData": [
+    {
+      "name": "REGION",
+      "value": "Metropolitana de Santiago"
+    }
+  ],
+  "addData": [
+    {
+      "name": "AUTRENTA",
+      "value": "abX5G2GOHM..."
+    }
+  ]
+}</con:request><con:originalUri>http://customercoreservices.wom.desa//ocp/srv40220-1-0/rest/sale</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource id="b81ba091-bcf5-4ea1-bdb3-971087d577e5" name="BadRequest" path="/${#Project#basePath}/${#Project#path1}"><con:settings/><con:parameters/><con:method name="Method Bad" id="2793dd00-84df-4ca2-a625-6a0e26ce76c8" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>404 400</con:status><con:params/></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>405</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>405</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>405</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>200</con:status><con:params/></con:representation><con:request name="Request 1" id="07851e4b-45ad-4971-95f5-323d300f6a85" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#protocol}://${#Project#server}:${#Project#port}</con:endpoint><con:request>{
+  "sourceAddData": [
+    {
+      "name": "region",
+      "value": "15"
+    }
+  ],
+  "party": {
+    "nationalId": "23872788k",
+    "currency": "CLP"
+  },
+  "partyAddData": [
+    {
+      "name": "IDFIBRA",
+      "value": "798044"
+    }
+  ],
+  "portability": {
+    "operator": "Virgin Mobile",
+    "amount": "9990"
+  },
+  "portabilityAddData": [
+    {
+      "name": "REGION",
+      "value": "Metropolitana de Santiago"
+    }
+  ],
+  "addData": [
+    {
+      "name": "AUTRENTA",
+      "value": "abX5G2GOHM..."
+    }
+  ]
+}</con:request><con:originalUri>http://customercoreservices.wom.desa//ocp/srv40220-1-0/rest/bad</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource id="24c0776c-58ad-42df-b977-7592b7b38373" name="ValidRequest - GET" path="/${#Project#basePath}/${#Project#path1}/${#Project#rut}-1"><con:settings/><con:parameters/><con:method name="Method Valid" id="a7e3ed4d-7eff-4d97-86d3-0e63f86df538" method="GET"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>400 404</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>200 202 201</con:status><con:params/><con:element>Response</con:element></con:representation><con:request name="Request 1" id="69eb2995-ef38-428d-a269-c3c3757c0efc" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#protocol}://${#Project#server}:${#Project#port}</con:endpoint><con:request>{
+  "sourceAddData": [
+    {
+      "name": "region",
+      "value": "15"
+    }
+  ],
+  "party": {
+    "nationalId": "23872788k",
+    "currency": "CLP"
+  },
+  "partyAddData": [
+    {
+      "name": "IDFIBRA",
+      "value": "798044"
+    }
+  ],
+  "portability": {
+    "operator": "Virgin Mobile",
+    "amount": "9990"
+  },
+  "portabilityAddData": [
+    {
+      "name": "REGION",
+      "value": "Metropolitana de Santiago"
+    }
+  ],
+  "addData": [
+    {
+      "name": "AUTRENTA",
+      "value": "abX5G2GOHM..."
+    }
+  ]
+}</con:request><con:originalUri>http://customercoreservices.wom.desa//ocp/srv40220-1-0/rest/sale</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource id="24c0776c-58ad-42df-b977-7592b7b38373" name="ValidRequest - No data found" path="/${#Project#basePath}/${#Project#path1}/${#Project#rut}"><con:settings/><con:parameters/><con:method name="Method Valid" id="a7e3ed4d-7eff-4d97-86d3-0e63f86df538" method="GET"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>400 404</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>200 202 201</con:status><con:params/><con:element>Response</con:element></con:representation><con:request name="Request 1" id="69eb2995-ef38-428d-a269-c3c3757c0efc" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#protocol}://${#Project#server}:${#Project#port}</con:endpoint><con:request>{
+  "sourceAddData": [
+    {
+      "name": "region",
+      "value": "15"
+    }
+  ],
+  "party": {
+    "nationalId": "23872788k",
+    "currency": "CLP"
+  },
+  "partyAddData": [
+    {
+      "name": "IDFIBRA",
+      "value": "798044"
+    }
+  ],
+  "portability": {
+    "operator": "Virgin Mobile",
+    "amount": "9990"
+  },
+  "portabilityAddData": [
+    {
+      "name": "REGION",
+      "value": "Metropolitana de Santiago"
+    }
+  ],
+  "addData": [
+    {
+      "name": "AUTRENTA",
+      "value": "abX5G2GOHM..."
+    }
+  ]
+}</con:request><con:originalUri>http://customercoreservices.wom.desa//ocp/srv40220-1-0/rest/sale</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:testSuite id="49842664-d5d8-450e-8449-61ac5e58c335" name="TestSuite-Unitest-CustomerInsight-POST"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" id="8cf32f27-86db-4dc7-9937-7f6dc5ec928e" keepSession="false" maxResults="0" name="TestCase-Unit-INICIO Despliegue" searchProperties="true"><con:settings/><con:testStep type="restrequest" name="INICIO - Despliegue" id="5fc054e5-7bf6-4b6a-be10-87f6b0f5a53d"><con:settings/><con:config service="CustomerInsight" methodName="Method Valid" resourcePath="/${#Project#basePath}/${#Project#path1}" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="INICIO - Despliegue" id="64fb9453-36f1-439c-873f-69a41fdcb569" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${#Project#protocol}://${#Project#server}:${#Project#port}</con:endpoint><con:request>{
+"source": {
+     "idApp": "WOMVOL",
+     "channel": "Web",
+     "user": "mcaror",
+     "branch": "Rosas"
+  },	
+  "sourceAddData": [
+    {
+      "name": "region",
+      "value": "15"
+    }
+  ],
+  "party": {
+    "nationalId": "${#Project#rut}",
+    "currency": "CLP"
+  },
+  "partyAddData": [
+    {
+      "name": "IDFIBRA",
+      "value": "798044"
+    }
+  ],
+  "portability": {
+    "operator": "Virgin Mobile",
+    "amount": "9990"
+  },
+  "portabilityAddData": [
+    {
+      "name": "REGION",
+      "value": "Metropolitana de Santiago"
+    }
+  ],
+  "addData": [
+    {
+      "name": "AUTRENTA",
+      "value": "abX5G2GOHM..."
+    }
+  ]
+}</con:request><con:originalUri>http://customercoreservices.wom.desa//ocp/srv40220-1-0/rest/sale</con:originalUri><con:assertion type="Response SLA Assertion" id="b8002bc5-0227-4565-9272-3ef258083afd" name="Response SLA"><con:configuration><SLA>${#Project#SLA}</SLA></con:configuration></con:assertion><con:assertion type="Simple Contains" id="38d50947-2e24-4a81-ba7f-28bd41d09cc9" name="Contains"><con:configuration><token>"PROCESSING"</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="68360cba-4408-4382-95b2-57c04c2673b4" name="Valid HTTP Status Codes"><con:configuration><codes>202</codes></con:configuration></con:assertion><con:assertion type="Simple NotContains" id="28ef771d-51dd-41a2-bc04-27880943532e" name="Not Contains"><con:configuration><token>ERROR</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" id="50570610-b1e5-45cd-a092-0a7d3e84ae70" keepSession="false" maxResults="0" name="TestCase-Unit-BAD Request" searchProperties="true"><con:settings/><con:testStep type="restrequest" name="BAD REQUEST" id="df3077e3-6eb0-4801-8190-edcf20328a1b"><con:settings/><con:config service="CustomerInsight" methodName="Method Bad" resourcePath="/${#Project#basePath}/${#Project#path1}" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="BAD REQUEST" id="79fefc1f-3bf2-4cc1-b415-a1c3183f1f8a" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${#Project#protocol}://${#Project#server}:${#Project#port}</con:endpoint><con:request/><con:originalUri>http://customercoreservices.wom.desa//ocp/srv40220-1-0/rest/sale</con:originalUri><con:assertion type="Simple Contains" id="d2edc614-c9eb-4295-b13e-b2e49bae8667" name="Contains"><con:configuration><token>"codigoError"</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" id="04affeed-1cec-40c7-82df-e39688b2a464" name="Response SLA"><con:configuration><SLA>${#Project#SLA}</SLA></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="be68fb1c-1c2c-4bf5-b511-2260769096e4" name="Valid HTTP Status Codes"><con:configuration><codes>400</codes></con:configuration></con:assertion><con:assertion type="Simple NotContains" id="d77a52a7-9f11-424c-a648-6ef015690ada" name="Not Contains"><con:configuration><token>PROCESSING</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>protocol</con:name><con:value>http</con:value></con:property><con:property><con:name>server</con:name><con:value>womapi.wom.desa</con:value></con:property><con:property><con:name>port</con:name><con:value>80</con:value></con:property><con:property><con:name>basePath</con:name><con:value>ocp/common/srv40290-1-0/rest/customerInsight</con:value></con:property><con:property><con:name>path1</con:name><con:value>checkCustomerCreditRating</con:value></con:property><con:property><con:name>SLA</con:name><con:value>2000</con:value></con:property><con:property><con:name>rut</con:name><con:value>23872742k</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

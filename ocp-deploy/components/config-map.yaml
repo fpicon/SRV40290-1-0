@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: #(deploy-name)#-properties
+  version: '#(version.service)#'
+  component: '#(deploy-name)#'
+data:
+  #(deploy-name)#.yaml: |-
+    app:
+      service:
+        prefix-url: '/'
+      config:
+        scoreVerticalValue: '#(prop.config.scoreVerticalValue)#'
+        portabilityVerticalValue: '#(prop.config.scorePortabilityValue)#'
+        mongoCollectionName: '#(prop.app.mongo-collection)#'
+      kafka:
+        retries: #(prop.app.kafka.retries)#
+        ssl:
+          enable: #(prop.app.kafka.ssl.enable)#
+        request:
+          timeout: #(prop.app.kafka.request.timeout)#
+        block:
+          timeout: #(prop.app.kafka.block.timeout)#
+    spring:
+      data:
+        mongodb:
+          uri: "#(prop.data.mongodb.uri)#"
+      kafka:
+        producer:
+          bootstrap-servers: '#(prop.kafka.binder.brokers)#'
+          properties:
+            ssl.truststore.location: '#(prop.app.kafka.ssl.config.truststore.location)#'
+            ssl.truststore.password: '#(prop.app.kafka.ssl.config.truststore.password)#'
+            security.protocol: SSL
+        template:
+          default-topic: '#(prop.template.default.topic)#'    
+    server:
+      port: #(app.port)#
+      servlet.context-path: #(prop.server.servlet.context-path)#
+    springfox:
+      documentation:
+        swagger:
+          v2:
+            path: '/docs/swagger.json'
+    logging:
+      level:
+        cl.wom.middleware.authorizecredit: #(app.log.level)#

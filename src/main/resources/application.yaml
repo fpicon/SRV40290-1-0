@@ -1,0 +1,40 @@
+---
+app:
+  service:
+    prefix-url: '/'
+  config:
+    scoreVerticalValue: '0'
+    portabilityVerticalValue: '1'
+    mongoCollectionName: 'creditCheck'
+  kafka:
+    retries: 3
+    ssl:
+      enable: true
+    request:
+      timeout: 5000
+    block:
+      timeout: 10000
+spring:
+  data:
+    mongodb:
+      uri: "mongodb://opsh_rewr_creditcheck_SRV40290_2:fn56MW4ZtNTWpW2w@10.120.241.217:27017,10.120.241.218:27017,10.120.241.219:27017/creditCheck?replicaSet=replprep03"
+  kafka:
+    producer:
+      bootstrap-servers: 'pre-production-kafka-bootstrap-amq-streams.wom.desa:443'
+      properties:
+        ssl.truststore.location: './src/main/resources/client.truststore.jks'
+        ssl.truststore.password: 'd29tMjAxOA=='
+        security.protocol: SSL
+    template:
+      default-topic: 'DESA_WOMAPI_COMMON-CREDIT_CHECK'    
+server:
+  port: 8889
+  servlet.context-path: /ocp/common/srv40290-1-0/rest
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: '/docs/swagger.json'
+logging:
+  level:
+    cl.wom.middleware.authorizecredit: ALL
