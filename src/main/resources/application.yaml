@@ -22,7 +22,7 @@ spring:
     producer:
       bootstrap-servers: 'pre-production-kafka-bootstrap-amq-streams.wom.desa:443'
       properties:
-        ssl.truststore.location: '../src/main/resources/client.truststore.jks'
+        ssl.truststore.location: '/mnt/secrets/keystore.jks'
         ssl.truststore.password: 'd29tMjAxOA=='
         security.protocol: SSL
     template:
